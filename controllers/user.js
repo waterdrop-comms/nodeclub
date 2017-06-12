@@ -19,7 +19,7 @@ exports.index = function (req, res, next) {
       return next(err);
     }
     if (!user) {
-      res.render404('这个用户不存在。');
+      res.render404('This user does not exist.');
       return;
     }
 
@@ -40,7 +40,7 @@ exports.index = function (req, res, next) {
         recent_topics: recent_topics,
         recent_replies: recent_replies,
         token: token,
-        pageTitle: util.format('@%s 的个人主页', user.loginname),
+        pageTitle: util.format('@%s home page', user.loginname),
       });
     };
 
@@ -87,7 +87,7 @@ exports.showSetting = function (req, res, next) {
       return next(err);
     }
     if (req.query.save === 'success') {
-      user.success = '保存成功。';
+      user.success = 'Saved.';
     }
     user.error = null;
     return res.render('user/setting', user);
