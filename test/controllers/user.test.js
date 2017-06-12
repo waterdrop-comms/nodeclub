@@ -75,7 +75,7 @@ describe('test/controllers/user.test.js', function () {
       .query({save: 'success'})
       .set('Cookie', support.normalUserCookie)
       .expect(200, function (err, res) {
-        res.text.should.containEql('保存成功。');
+        res.text.should.containEql('Saved.');
         done(err);
       });
     });
