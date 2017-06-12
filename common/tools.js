@@ -1,9 +1,9 @@
 var bcrypt = require('bcryptjs');
 var moment = require('moment');
 
-moment.locale('zh-cn'); // 使用中文
+moment.locale('en-au'); // using english
 
-// 格式化时间
+// format date and time
 exports.formatDate = function (date, friendly) {
   date = moment(date);
 
