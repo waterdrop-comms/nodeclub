@@ -116,9 +116,9 @@ var config = {
 
   // 版块
   tabs: [
-    ['share', '分享'],
-    ['ask', '问答'],
-    ['job', '招聘'],
+    ['share', 'Share'],
+    ['ask', 'Q/A'],
+    ['job', 'Jobs'],
   ],
 
   // 极光推送
