@@ -26,26 +26,25 @@ exports.signup = function (req, res, next) {
     res.render('sign/signup', {error: msg, loginname: loginname, email: email});
   });
 
-  // 验证信息的正确性
+  // validate entries 
   if ([loginname, pass, rePass, email].some(function (item) { return item === ''; })) {
-    ep.emit('prop_err', '信息不完整。');
+    ep.emit('prop_err', 'Information Missing!');
     return;
   }
   if (loginname.length < 5) {
-    ep.emit('prop_err', '用户名至少需要5个字符。');
+    ep.emit('prop_err', 'User Name too short, minimum 5 chars.');
     return;
   }
   if (!tools.validateId(loginname)) {
-    return ep.emit('prop_err', '用户名不合法。');
+    return ep.emit('prop_err', 'User Name is used.');
   }
   if (!validator.isEmail(email)) {
-    return ep.emit('prop_err', '邮箱不合法。');
+    return ep.emit('prop_err', 'Wrong email format');
   }
   if (pass !== rePass) {
-    return ep.emit('prop_err', '两次密码输入不一致。');
+    return ep.emit('prop_err', 'Password Mismatch!');
   }
-  // END 验证信息的正确性
-
+  // END 
 
   User.getUsersByQuery({'$or': [
     {'loginname': loginname},
@@ -55,7 +54,7 @@ exports.signup = function (req, res, next) {
       return next(err);
     }
     if (users.length > 0) {
-      ep.emit('prop_err', '用户名或邮箱已被使用。');
+      ep.emit('prop_err', 'User Name or Email address is used.');
       return;
     }
 
@@ -66,10 +65,10 @@ exports.signup = function (req, res, next) {
         if (err) {
           return next(err);
         }
-        // 发送激活邮件
+        // send email
         mail.sendActiveMail(email, utility.md5(email + passhash + config.session_secret), loginname);
         res.render('sign/signup', {
-          success: '欢迎加入 ' + config.name + '！我们已给您的注册邮箱发送了一封邮件，请点击里面的链接来激活您的帐号。'
+          success: 'Welcome to ' + config.name + ', we have sent you email for activation. Please check.'
         });
       });
 
@@ -115,7 +114,7 @@ exports.login = function (req, res, next) {
 
   if (!loginname || !pass) {
     res.status(422);
-    return res.render('sign/signin', { error: '信息不完整。' });
+    return res.render('sign/signin', { error: 'Need Details' });
   }
 
   var getUser;
@@ -127,7 +126,7 @@ exports.login = function (req, res, next) {
 
   ep.on('login_error', function (login_error) {
     res.status(403);
-    res.render('sign/signin', { error: '用户名或密码错误' });
+    res.render('sign/signin', { error: 'User Name or Password Wrong.' });
   });
 
   getUser(loginname, function (err, user) {
@@ -143,10 +142,10 @@ exports.login = function (req, res, next) {
         return ep.emit('login_error');
       }
       if (!user.active) {
-        // 重新发送激活邮件
+        // resend activate email.
         mail.sendActiveMail(user.email, utility.md5(user.email + passhash + config.session_secret), user.loginname);
         res.status(403);
-        return res.render('sign/signin', { error: '此帐号还没有被激活，激活链接已发送到 ' + user.email + ' 邮箱，请查收。' });
+        return res.render('sign/signin', { error: 'This account has not been activated. The activation email has sent to ' + user.email + ', please check.' });
       }
       // store session cookie
       authMiddleWare.gen_session(user, res);
@@ -193,7 +192,7 @@ exports.activeAccount = function (req, res, next) {
       if (err) {
         return next(err);
       }
-      res.render('notify/notify', {success: '帐号已被激活，请登录'});
+      res.render('notify/notify', {success: 'Activated. Please login.'});
     });
   });
 };
@@ -214,7 +213,7 @@ exports.updateSearchPass = function (req, res, next) {
 
   User.getUserByMail(email, function (err, user) {
     if (!user) {
-      res.render('sign/search_pass', {error: '没有这个电子邮箱。', email: email});
+      res.render('sign/search_pass', {error: 'Wrong email address', email: email});
       return;
     }
     user.retrieve_key = retrieveKey;
@@ -225,7 +224,7 @@ exports.updateSearchPass = function (req, res, next) {
       }
       // 发送重置密码邮件
       mail.sendResetPassMail(email, retrieveKey, user.loginname);
-      res.render('notify/notify', {success: '我们已给您填写的电子邮箱发送了一封邮件，请在24小时内点击里面的链接来重置密码。'});
+      res.render('notify/notify', {success: 'We have sent you the email for reset password. Please check.'});
     });
   });
 };
@@ -245,13 +244,13 @@ exports.resetPass = function (req, res, next) {
   User.getUserByNameAndKey(name, key, function (err, user) {
     if (!user) {
       res.status(403);
-      return res.render('notify/notify', {error: '信息有误，密码无法重置。'});
+      return res.render('notify/notify', {error: 'Details wrong, please try again.'});
     }
     var now = new Date().getTime();
     var oneDay = 1000 * 60 * 60 * 24;
     if (!user.retrieve_time || now - user.retrieve_time > oneDay) {
       res.status(403);
-      return res.render('notify/notify', {error: '该链接已过期，请重新申请。'});
+      return res.render('notify/notify', {error: 'The link is expired, please try again.'});
     }
     return res.render('sign/reset', {name: name, key: key});
   });
@@ -267,23 +266,23 @@ exports.updatePass = function (req, res, next) {
   ep.fail(next);
 
   if (psw !== repsw) {
-    return res.render('sign/reset', {name: name, key: key, error: '两次密码输入不一致。'});
+    return res.render('sign/reset', {name: name, key: key, error: 'Password mismatch.'});
   }
   User.getUserByNameAndKey(name, key, ep.done(function (user) {
     if (!user) {
-      return res.render('notify/notify', {error: '错误的激活链接'});
+      return res.render('notify/notify', {error: 'Wrong link.'});
     }
     tools.bhash(psw, ep.done(function (passhash) {
       user.pass          = passhash;
       user.retrieve_key  = null;
       user.retrieve_time = null;
-      user.active        = true; // 用户激活
+      user.active        = true; // activate
 
       user.save(function (err) {
         if (err) {
           return next(err);
         }
-        return res.render('notify/notify', {success: '你的密码已重置。'});
+        return res.render('notify/notify', {success: 'Password has been reset.'});
       });
     }));
   }));

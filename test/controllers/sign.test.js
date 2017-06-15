@@ -26,7 +26,7 @@ describe('test/controllers/sign.test.js', function () {
     it('should visit sign up page', function (done) {
       request.get('/signup')
       .expect(200, function (err, res) {
-        res.text.should.containEql('确认密码');
+        res.text.should.containEql('Confirm Password');
         done(err);
       });
     });
@@ -57,7 +57,7 @@ describe('test/controllers/sign.test.js', function () {
         })
         .expect(200, function (err, res) {
           should.not.exists(err);
-          res.text.should.containEql('欢迎加入');
+          res.text.should.containEql('Welcome to');
           UserProxy.getUserByLoginName(loginname, function (err, user) {
             should.not.exists(err);
             user.should.ok();
@@ -92,8 +92,8 @@ describe('test/controllers/sign.test.js', function () {
   describe('login in', function () {
     it('should visit sign in page', function (done) {
       request.get('/signin').end(function (err, res) {
-        res.text.should.containEql('登录');
-        res.text.should.containEql('通过 GitHub 登录');
+        res.text.should.containEql('Login');
+        res.text.should.containEql('Login Via GitHub');
         done(err);
       });
     });
@@ -106,7 +106,7 @@ describe('test/controllers/sign.test.js', function () {
       })
       .end(function (err, res) {
         res.status.should.equal(422);
-        res.text.should.containEql('信息不完整。');
+        res.text.should.containEql('Need Details');
         done(err);
       });
     });
@@ -119,7 +119,7 @@ describe('test/controllers/sign.test.js', function () {
       })
       .end(function (err, res) {
         res.status.should.equal(403);
-        res.text.should.containEql('此帐号还没有被激活，激活链接已发送到');
+        res.text.should.containEql('This account has not been activated. The activation email has sent');
         done(err);
       });
     });
@@ -146,7 +146,7 @@ describe('test/controllers/sign.test.js', function () {
           name: loginname,
         })
         .expect(200, function (err, res) {
-          res.text.should.containEql('帐号已被激活，请登录');
+          res.text.should.containEql('Activated. Please login.');
           done(err);
         });
       });
@@ -174,7 +174,7 @@ describe('test/controllers/sign.test.js', function () {
     it('should 200 when get /search_pass', function (done) {
       request.get('/search_pass')
       .expect(200, function (err, res) {
-        res.text.should.containEql('找回密码');
+        res.text.should.containEql('Find Password');
         done(err);
       });
     });
@@ -184,8 +184,8 @@ describe('test/controllers/sign.test.js', function () {
       mm(mailService, 'sendMail', function (data) {
         data.from.should.equal('Nodeclub <club@126.com>');
         data.to.should.match(new RegExp(loginname));
-        data.subject.should.equal('Nodeclub社区密码重置');
-        data.html.should.match(new RegExp('<p>您好：' + loginname));
+        data.subject.should.equal('Nodeclub Password Reset');
+        data.html.should.match(new RegExp('<p>Hi:' + loginname));
         resetKey = data.html.match(/key=(.+?)&/)[1];
         done();
       });
@@ -195,7 +195,7 @@ describe('test/controllers/sign.test.js', function () {
         email: email
       })
       .expect(200, function (err, res) {
-        res.text.should.containEql('我们已给您填写的电子邮箱发送了一封邮件，请在24小时内点击里面的链接来重置密码。');
+        res.text.should.containEql('We have sent you the email for reset password. Please check.');
         done(err);
       });
     });
@@ -207,7 +207,7 @@ describe('test/controllers/sign.test.js', function () {
         name : loginname
       })
       .expect(200, function (err, res) {
-        res.text.should.containEql('重置密码');
+        res.text.should.containEql('Reset Password');
         done(err);
       });
     });
@@ -219,7 +219,7 @@ describe('test/controllers/sign.test.js', function () {
         name : loginname
       })
       .expect(403, function (err, res) {
-        res.text.should.containEql('信息有误，密码无法重置。');
+        res.text.should.containEql('Details wrong, please try again.');
         done(err);
       });
     });
@@ -233,7 +233,7 @@ describe('test/controllers/sign.test.js', function () {
         name: loginname,
       })
       .expect(200, function (err, res) {
-        res.text.should.containEql('你的密码已重置。');
+        res.text.should.containEql('Password has been reset.');
         done(err);
       })
     })

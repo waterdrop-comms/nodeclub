@@ -1,0 +1,124 @@
+
+
+log4js.fileAppender - Writing to file logs/cheese.log, error happened  { Error: ENOENT: no such file or directory, open 'logs/cheese.log'
+
+
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'logs/cheese.log' }
+  test/controllers/sign.test.js
+    sign up
+[32m[2017-06-15 14:35:08.262] [INFO] cheese - [39m
+
+Started 2017-06-15T04:35:08.262Z GET /signup ::ffff:127.0.0.1
+[32m[2017-06-15 14:35:08.283] [INFO] cheese - [39mRender view sign/signup (16ms)
+[32m[2017-06-15 14:35:08.286] [INFO] cheese - [39mCompleted 200 (24ms)
+      ✓ should visit sign up page (45ms)
+[32m[2017-06-15 14:35:08.297] [INFO] cheese - [39m
+
+Started 2017-06-15T04:35:08.297Z GET /signup_github ::ffff:127.0.0.1
+[32m[2017-06-15 14:35:08.300] [INFO] cheese - [39mCompleted 302 (3ms)
+      ✓ should redirect to github oauth page
+[32m[2017-06-15 14:35:08.304] [INFO] cheese - [39m
+
+Started 2017-06-15T04:35:08.304Z POST /signup ::ffff:127.0.0.1
+[36m[2017-06-15 14:35:08.328] [DEBUG] cheese - [39mMONGO users.find {"conditions":{"$or":[{"loginname":"testuser1497501308211"},{"email":"testuser1497501308211@gmail.com"}]},"options":{},"collectionName":"users"} 1ms
+[32m[2017-06-15 14:35:08.664] [INFO] cheese - [39mRender view sign/signup (7ms)
+[32m[2017-06-15 14:35:08.665] [INFO] cheese - [39mCompleted 200 (361ms)
+[36m[2017-06-15 14:35:08.669] [DEBUG] cheese - [39mMONGO users.findOne {"conditions":{"loginname":{}},"options":{},"collectionName":"users"} 1ms
+      ✓ should sign up a user (367ms)
+[32m[2017-06-15 14:35:08.671] [INFO] cheese - [39m
+
+Started 2017-06-15T04:35:08.671Z POST /signup ::ffff:127.0.0.1
+[32m[2017-06-15 14:35:08.675] [INFO] cheese - [39mRender view sign/signup (3ms)
+[32m[2017-06-15 14:35:08.675] [INFO] cheese - [39mCompleted 422 (4ms)
+      ✓ should not sign up a user when loginname is exists
+[32m[2017-06-15 14:35:08.678] [INFO] cheese - [39m
+
+Started 2017-06-15T04:35:08.678Z POST /signup ::ffff:127.0.0.1
+[36m[2017-06-15 14:35:08.679] [DEBUG] cheese - [39mMONGO users.find {"conditions":{"$or":[{"loginname":"testuser14975013082111"},{"email":"testuser1497501308211@gmail.com"}]},"options":{},"collectionName":"users"} 0ms
+[32m[2017-06-15 14:35:08.682] [INFO] cheese - [39mRender view sign/signup (2ms)
+[32m[2017-06-15 14:35:08.683] [INFO] cheese - [39mCompleted 422 (5ms)
+      ✓ should not sign up a user when email is exists
+    login in
+[32m[2017-06-15 14:35:08.686] [INFO] cheese - [39m
+
+Started 2017-06-15T04:35:08.685Z GET /signin ::ffff:127.0.0.1
+[32m[2017-06-15 14:35:08.688] [INFO] cheese - [39mRender view sign/signin (2ms)
+[32m[2017-06-15 14:35:08.689] [INFO] cheese - [39mCompleted 200 (4ms)
+      ✓ should visit sign in page
+[32m[2017-06-15 14:35:08.692] [INFO] cheese - [39m
+
+Started 2017-06-15T04:35:08.692Z POST /signin ::ffff:127.0.0.1
+[32m[2017-06-15 14:35:08.695] [INFO] cheese - [39mRender view sign/signin (2ms)
+[32m[2017-06-15 14:35:08.696] [INFO] cheese - [39mCompleted 422 (4ms)
+      ✓ should error when no loginname or no pass
+[32m[2017-06-15 14:35:08.700] [INFO] cheese - [39m
+
+Started 2017-06-15T04:35:08.700Z POST /signin ::ffff:127.0.0.1
+[36m[2017-06-15 14:35:08.701] [DEBUG] cheese - [39mMONGO users.findOne {"conditions":{"loginname":{}},"options":{},"collectionName":"users"} 1ms
+[32m[2017-06-15 14:35:09.026] [INFO] cheese - [39mRender view sign/signin (1ms)
+[32m[2017-06-15 14:35:09.029] [INFO] cheese - [39mCompleted 403 (329ms)
+      ✓ should not login in when not actived (332ms)
+    sign out
+[32m[2017-06-15 14:35:09.033] [INFO] cheese - [39m
+
+Started 2017-06-15T04:35:09.033Z POST /signout ::ffff:127.0.0.1
+[32m[2017-06-15 14:35:09.035] [INFO] cheese - [39mCompleted 302 (2ms)
+      ✓ should sign out
+    active
+[36m[2017-06-15 14:35:09.040] [DEBUG] cheese - [39mMONGO users.findOne {"conditions":{"loginname":{}},"options":{},"collectionName":"users"} 3ms
+[32m[2017-06-15 14:35:09.043] [INFO] cheese - [39m
+
+Started 2017-06-15T04:35:09.043Z GET /active_account?key=1fbcb75c5b63b549a9884cb0c2f29350&name=testuser1497501308211 ::ffff:127.0.0.1
+[36m[2017-06-15 14:35:09.044] [DEBUG] cheese - [39mMONGO users.findOne {"conditions":{"loginname":{}},"options":{},"collectionName":"users"} 0ms
+[32m[2017-06-15 14:35:09.049] [INFO] cheese - [39mRender view notify/notify (3ms)
+[32m[2017-06-15 14:35:09.050] [INFO] cheese - [39mCompleted 200 (7ms)
+      ✓ should active account
+    when new user is actived
+[32m[2017-06-15 14:35:09.054] [INFO] cheese - [39m
+
+Started 2017-06-15T04:35:09.054Z POST /signin ::ffff:127.0.0.1
+[36m[2017-06-15 14:35:09.055] [DEBUG] cheese - [39mMONGO users.findOne {"conditions":{"loginname":{}},"options":{},"collectionName":"users"} 0ms
+[32m[2017-06-15 14:35:09.410] [INFO] cheese - [39mCompleted 302 (356ms)
+      ✓ should login in successful (358ms)
+    search pass
+[32m[2017-06-15 14:35:09.413] [INFO] cheese - [39m
+
+Started 2017-06-15T04:35:09.412Z GET /search_pass ::ffff:127.0.0.1
+[32m[2017-06-15 14:35:09.415] [INFO] cheese - [39mRender view sign/search_pass (2ms)
+[32m[2017-06-15 14:35:09.416] [INFO] cheese - [39mCompleted 200 (4ms)
+      ✓ should 200 when get /search_pass
+[32m[2017-06-15 14:35:09.419] [INFO] cheese - [39m
+
+Started 2017-06-15T04:35:09.419Z POST /search_pass ::ffff:127.0.0.1
+[36m[2017-06-15 14:35:09.427] [DEBUG] cheese - [39mMONGO users.findOne {"conditions":{"email":"testuser1497501308211@gmail.com"},"options":{},"collectionName":"users"} 7ms
+[32m[2017-06-15 14:35:09.444] [INFO] cheese - [39mRender view notify/notify (10ms)
+[32m[2017-06-15 14:35:09.444] [INFO] cheese - [39mCompleted 200 (25ms)
+      ✓ should update search pass
+[32m[2017-06-15 14:35:09.447] [INFO] cheese - [39m
+
+Started 2017-06-15T04:35:09.447Z GET /reset_pass?key=e7547eaa-0dfa-48f2-aeee-61aa4ac39009&name=testuser1497501308211 ::ffff:127.0.0.1
+[36m[2017-06-15 14:35:09.448] [DEBUG] cheese - [39mMONGO users.findOne {"conditions":{"retrieve_key":"e7547eaa-0dfa-48f2-aeee-61aa4ac39009","loginname":"testuser1497501308211"},"options":{},"collectionName":"users"} 1ms
+[32m[2017-06-15 14:35:09.450] [INFO] cheese - [39mRender view sign/reset (2ms)
+[32m[2017-06-15 14:35:09.450] [INFO] cheese - [39mCompleted 200 (3ms)
+      ✓ should 200 when get /reset_pass
+[32m[2017-06-15 14:35:09.453] [INFO] cheese - [39m
+
+Started 2017-06-15T04:35:09.453Z GET /reset_pass?key=wrong%20key&name=testuser1497501308211 ::ffff:127.0.0.1
+[36m[2017-06-15 14:35:09.454] [DEBUG] cheese - [39mMONGO users.findOne {"conditions":{"retrieve_key":"wrong key","loginname":"testuser1497501308211"},"options":{},"collectionName":"users"} 1ms
+[32m[2017-06-15 14:35:09.456] [INFO] cheese - [39mRender view notify/notify (2ms)
+[32m[2017-06-15 14:35:09.456] [INFO] cheese - [39mCompleted 403 (3ms)
+      ✓ should 403 get /reset_pass when with wrong resetKey
+[32m[2017-06-15 14:35:09.460] [INFO] cheese - [39m
+
+Started 2017-06-15T04:35:09.460Z POST /reset_pass ::ffff:127.0.0.1
+[36m[2017-06-15 14:35:09.461] [DEBUG] cheese - [39mMONGO users.findOne {"conditions":{"retrieve_key":"e7547eaa-0dfa-48f2-aeee-61aa4ac39009","loginname":"testuser1497501308211"},"options":{},"collectionName":"users"} 1ms
+[32m[2017-06-15 14:35:09.778] [INFO] cheese - [39mRender view notify/notify (2ms)
+[32m[2017-06-15 14:35:09.779] [INFO] cheese - [39mCompleted 200 (319ms)
+      ✓ should update passwork (322ms)
+
+
+  16 passing (2s)
+

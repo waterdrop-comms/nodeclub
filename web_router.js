@@ -36,16 +36,16 @@ router.get('/app/download', site.appDownload);
 
 // sign controller
 if (config.allow_sign_up) {
-  router.get('/signup', sign.showSignup);  // 跳转到注册页面
-  router.post('/signup', sign.signup);  // 提交注册信息
+  router.get('/signup', sign.showSignup);  // jump to register
+  router.post('/signup', sign.signup);  // submit sign up data
 } else {
-  // 进行github验证
+  // github verify
   router.get('/signup', function (req, res, next) {
     return res.redirect('/auth/github')
   });
 }
-router.post('/signout', sign.signout);  // 登出
-router.get('/signin', sign.showLogin);  // 进入登录页面
+router.post('/signout', sign.signout);  // sign out
+router.get('/signin', sign.showLogin);  // into login screen
 router.post('/signin', sign.login);  // 登录校验
 router.get('/active_account', sign.activeAccount);  //帐号激活
 
