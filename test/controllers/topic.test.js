@@ -122,9 +122,9 @@ describe('test/controllers/topic.test.js', function () {
     it('should update a topic', function (done) {
       request.post('/topic/' + support.testTopic._id + '/edit')
       .send({
-        title: '修改后的 topic title',
+        title: 'updated topic title',
         tab: 'share',
-        t_content: '修改后的木耳敲回车',
+        t_content: 'updated click for test',
       })
       .set('Cookie', support.normalUserCookie)
       .expect(302, function (err, res) {
@@ -147,7 +147,7 @@ describe('test/controllers/topic.test.js', function () {
       request.post('/topic/' + wouldBeDeleteTopic._id + '/delete')
       .set('Cookie', support.normalUser2Cookie)
       .expect(403, function (err, res) {
-        res.body.should.eql({success: false, message: '无权限'});
+        res.body.should.eql({success: false, message: 'No Permission.'});
         done(err);
       });
     });
@@ -156,7 +156,7 @@ describe('test/controllers/topic.test.js', function () {
       request.post('/topic/' + wouldBeDeleteTopic._id + '/delete')
       .set('Cookie', support.normalUserCookie)
       .expect(200, function (err, res) {
-        res.body.should.eql({ success: true, message: '话题已被删除。' });
+        res.body.should.eql({ success: true, message: 'Topic is deleted.' });
         done(err);
       });
     });
@@ -167,7 +167,7 @@ describe('test/controllers/topic.test.js', function () {
       request.post('/topic/' + support.testTopic._id + '/top')
       .set('Cookie', support.adminUserCookie)
       .expect(200, function (err, res) {
-        res.text.should.containEql('此话题已置顶。');
+        res.text.should.containEql('Moved to top.');
         done(err);
       });
     });
@@ -176,7 +176,7 @@ describe('test/controllers/topic.test.js', function () {
       request.post('/topic/' + support.testTopic._id + '/top')
       .set('Cookie', support.adminUserCookie)
       .expect(200, function (err, res) {
-        res.text.should.containEql('此话题已取消置顶');
+        res.text.should.containEql('Cancelled the top.');
         done(err);
       });
     });

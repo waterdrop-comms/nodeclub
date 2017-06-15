@@ -260,9 +260,9 @@ exports.update = function (req, res, next) {
 };
 
 exports.delete = function (req, res, next) {
-  //删除话题, 话题作者topic_count减1
-  //删除回复，回复作者reply_count减1
-  //删除topic_collect，用户collect_topic_count减1
+  //remove topic, topic_count -1
+  //remove comment，reply_count -1
+  //remove topic_collect，collect_topic_count-1
 
   var topic_id = req.params.tid;
 
@@ -272,11 +272,11 @@ exports.delete = function (req, res, next) {
     }
     if (!req.session.user.is_admin && !(topic.author_id.equals(req.session.user._id))) {
       res.status(403);
-      return res.send({success: false, message: '无权限'});
+      return res.send({success: false, message: 'No Permission.'});
     }
     if (!topic) {
       res.status(422);
-      return res.send({ success: false, message: '此话题不存在或已被删除。' });
+      return res.send({ success: false, message: 'Topic is deleted.' });
     }
     author.score -= 5;
     author.topic_count -= 1;
@@ -287,7 +287,7 @@ exports.delete = function (req, res, next) {
       if (err) {
         return res.send({ success: false, message: err.message });
       }
-      res.send({ success: true, message: '话题已被删除。' });
+      res.send({ success: true, message: 'Topic is deleted.' });
     });
   });
 };
@@ -314,7 +314,7 @@ exports.top = function (req, res, next) {
       if (err) {
         return next(err);
       }
-      var msg = topic.top ? '此话题已置顶。' : '此话题已取消置顶。';
+      var msg = topic.top ? 'Moved to top.' : 'Cancelled the top.';
       res.render('notify/notify', {success: msg, referer: referer});
     });
   });
