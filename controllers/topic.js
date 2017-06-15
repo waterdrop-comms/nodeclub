@@ -128,16 +128,16 @@ exports.put = function (req, res, next) {
     return tPair[0];
   });
 
-  // 验证
+  // validate
   var editError;
   if (title === '') {
-    editError = '标题不能是空的。';
+    editError = 'Title is blank.';
   } else if (title.length < 5 || title.length > 100) {
-    editError = '标题字数太多或太少。';
+    editError = 'Too many/less characters';
   } else if (!tab || allTabs.indexOf(tab) === -1) {
-    editError = '必须选择一个版块。';
+    editError = 'Must select one section.';
   } else if (content === '') {
-    editError = '内容不可为空';
+    editError = 'No content.';
   }
   // END 验证
 

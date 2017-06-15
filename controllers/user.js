@@ -30,7 +30,7 @@ exports.index = function (req, res, next) {
         }
         return user.url;
       })();
-      // 如果用户没有激活，那么管理员可以帮忙激活
+      // if use dont，admin can help
       var token = '';
       if (!user.active && req.session.user && req.session.user.is_admin) {
         token = utility.md5(user.email + user.pass + config.session_secret);
@@ -58,7 +58,7 @@ exports.index = function (req, res, next) {
         var topic_ids = replies.map(function (reply) {
           return reply.topic_id.toString()
         })
-        topic_ids = _.uniq(topic_ids).slice(0, 5); //  只显示最近5条
+        topic_ids = _.uniq(topic_ids).slice(0, 5); //  latest 5
 
         var query = {_id: {'$in': topic_ids}};
         var opt = {};
@@ -98,7 +98,7 @@ exports.setting = function (req, res, next) {
   var ep = new EventProxy();
   ep.fail(next);
 
-  // 显示出错或成功信息
+  // show error or success 
   function showMessage(msg, data, isSuccess) {
     data = data || req.body;
     var data2 = {
@@ -144,13 +144,13 @@ exports.setting = function (req, res, next) {
     var old_pass = validator.trim(req.body.old_pass);
     var new_pass = validator.trim(req.body.new_pass);
     if (!old_pass || !new_pass) {
-      return res.send('旧密码或新密码不得为空');
+      return res.send('Not allowed blank');
     }
 
     User.getUserById(req.session.user._id, ep.done(function (user) {
       tools.bcompare(old_pass, user.pass, ep.done(function (bool) {
         if (!bool) {
-          return showMessage('当前密码不正确。', user);
+          return showMessage('Current password does not match.', user);
         }
 
         tools.bhash(new_pass, ep.done(function (passhash) {
@@ -159,7 +159,7 @@ exports.setting = function (req, res, next) {
             if (err) {
               return next(err);
             }
-            return showMessage('密码已被修改。', user, true);
+            return showMessage('Password updated.', user, true);
 
           });
         }));
@@ -250,7 +250,7 @@ exports.listTopics = function (req, res, next) {
 
   User.getUserByLoginName(user_name, function (err, user) {
     if (!user) {
-      res.render404('这个用户不存在。');
+      res.render404('This user does not exist.');
       return;
     }
 
@@ -285,7 +285,7 @@ exports.listReplies = function (req, res, next) {
 
   User.getUserByLoginName(user_name, function (err, user) {
     if (!user) {
-      res.render404('这个用户不存在。');
+      res.render404('This user does not exist.');
       return;
     }
 
@@ -304,7 +304,7 @@ exports.listReplies = function (req, res, next) {
 
     var opt = {skip: (page - 1) * limit, limit: limit, sort: '-create_at'};
     Reply.getRepliesByAuthorId(user._id, opt, proxy.done(function (replies) {
-      // 获取所有有评论的主题
+      //get all topics 
       var topic_ids = replies.map(function (reply) {
         return reply.topic_id.toString();
       });
@@ -369,11 +369,11 @@ exports.deleteAll = function (req, res, next) {
       function () {
         res.json({status: 'success'});
       });
-    // 删除主题
+    // delete topics 
     TopicModel.update({author_id: user._id}, {$set: {deleted: true}}, {multi: true}, ep.done('del_topics'));
-    // 删除评论
+    // delete comments
     ReplyModel.update({author_id: user._id}, {$set: {deleted: true}}, {multi: true}, ep.done('del_replys'));
-    // 点赞数也全部干掉
+    // delete praise
     ReplyModel.update({}, {$pull: {'ups': user._id}}, {multi: true}, ep.done('del_ups'));
   }));
 };

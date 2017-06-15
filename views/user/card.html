@@ -7,18 +7,18 @@
 
     <div class='board clearfix'>
       <div class='floor'>
-        <span class='big'>积分: <%= user.score %> </span>
+        <span class='big'>Points: <%= user.score %> </span>
       </div>
     </div>
     <div class="space clearfix"></div>
     <span class="signature">
-        “
+        "
         <% if (user.signature) {%>
             <%-escapeSignature(user.signature)%>
         <%} else {%>
-            这家伙很懒，什么个性签名都没有留下。
+            I am lazy!
         <%}%>
-        ”
+        "
     </span>
   </div>
 </div>

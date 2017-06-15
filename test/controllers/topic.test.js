@@ -43,7 +43,7 @@ describe('test/controllers/topic.test.js', function () {
       request.get('/topic/create')
         .set('Cookie', support.normalUserCookie)
         .expect(200, function (err, res) {
-          res.text.should.containEql('发布话题');
+          res.text.should.containEql('New Topic');
           done(err);
         });
     });
@@ -55,11 +55,11 @@ describe('test/controllers/topic.test.js', function () {
       .send({
         title: '',
         tab: 'share',
-        t_content: '木耳敲回车',
+        t_content: 'Click for test',
       })
       .set('Cookie', support.normalUserCookie)
       .expect(422, function (err, res) {
-        res.text.should.containEql('标题不能是空的。');
+        res.text.should.containEql('Title is blank.');
         done(err);
       });
     });
@@ -67,13 +67,13 @@ describe('test/controllers/topic.test.js', function () {
     it('should not create a topic when no tab', function (done) {
       request.post('/topic/create')
       .send({
-        title: '呵呵复呵呵',
+        title: 'Test Title',
         tab: '',
-        t_content: '木耳敲回车',
+        t_content: 'Click for test',
       })
       .set('Cookie', support.normalUserCookie)
       .expect(422, function (err, res) {
-        res.text.should.containEql('必须选择一个版块。');
+        res.text.should.containEql('Must select one section.');
         done(err);
       });
     });
@@ -81,13 +81,13 @@ describe('test/controllers/topic.test.js', function () {
     it('should not create a topic when no content', function (done) {
       request.post('/topic/create')
       .send({
-        title: '呵呵复呵呵',
+        title: 'Test Title',
         tab: 'share',
         t_content: '',
       })
       .set('Cookie', support.normalUserCookie)
       .expect(422, function (err, res) {
-        res.text.should.containEql('内容不可为空');
+        res.text.should.containEql('No content.');
         done(err);
       });
     });
@@ -95,9 +95,9 @@ describe('test/controllers/topic.test.js', function () {
     it('should create a topic', function (done) {
       request.post('/topic/create')
       .send({
-        title: '呵呵复呵呵' + new Date(),
+        title: 'test title' + new Date(),
         tab: 'share',
-        t_content: '木耳敲回车',
+        t_content: 'click for test',
       })
       .set('Cookie', support.normalUserCookie)
       .expect(302, function (err, res) {
@@ -112,7 +112,7 @@ describe('test/controllers/topic.test.js', function () {
       request.get('/topic/' + support.testTopic._id + '/edit')
       .set('Cookie', support.normalUserCookie)
       .expect(200, function (err, res) {
-        res.text.should.containEql('编辑话题');
+        res.text.should.containEql('Edit Topic');
         done(err);
       });
     });

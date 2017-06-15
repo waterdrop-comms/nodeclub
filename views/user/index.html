@@ -15,7 +15,7 @@
 
       <div class='user_profile'>
         <ul class='unstyled'>
-          <span class='big'><%= user.score %></span> 积分
+          <span class='big'><%= user.score %></span> Points
           <% if (user.collect_topic_count) {%>
           <li>
             <a class='dark' href="/user/<%= user.loginname %>/collections" target='_blank'>
@@ -51,7 +51,7 @@
           <% } %>
         </ul>
       </div>
-      <p class='col_fade'>注册时间 <%= user.create_at_ago() %></p>
+      <p class='col_fade'>Registration Date<%= user.create_at_ago() %></p>
       <% if (current_user && current_user.is_admin) { %>
       <% if (!user.is_star) { %>
       <span class='span-common' id='set_star_btn' action='set_star'>设为达人</span>

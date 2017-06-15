@@ -34,8 +34,8 @@ describe('test/controllers/user.test.js', function () {
       request.get('/user/' + testUser.loginname)
       .expect(200, function (err, res) {
         var texts = [
-          '注册时间',
-          '这家伙很懒，什么个性签名都没有留下。',
+          'Registration Date',
+          'I am lazy',
           '最近创建的话题',
           '无话题',
           '最近参与的话题',
@@ -53,7 +53,7 @@ describe('test/controllers/user.test.js', function () {
     it('should show star uses', function (done) {
       request.get('/stars')
       .expect(200, function (err, res) {
-        res.text.should.containEql('社区达人');
+        res.text.should.containEql('TopClass');
         done(err);
       });
     });
@@ -64,7 +64,7 @@ describe('test/controllers/user.test.js', function () {
       request.get('/setting')
       .set('Cookie', support.normalUserCookie)
       .expect(200, function (err, res) {
-        res.text.should.containEql('同时决定了 Gravatar 头像');
+        res.text.should.containEql('Used for Gravatar');
         res.text.should.containEql('Access Token');
         done(err);
       });
@@ -89,7 +89,7 @@ describe('test/controllers/user.test.js', function () {
         location: 'west lake',
         weibo: 'http://weibo.com/tangzhanli',
         github: '@alsotang',
-        signature: '仍然很懒',
+        signature: 'very lazy',
         name: support.normalUser.loginname,
         email: support.normalUser.email,
       };
@@ -116,7 +116,7 @@ describe('test/controllers/user.test.js', function () {
       .set('Cookie', support.normalUserCookie)
       .send(userInfo)
       .expect(200, function (err, res) {
-        res.text.should.containEql('密码已被修改。');
+        res.text.should.containEql('Password updated.');
         done(err);
       });
     });
@@ -130,7 +130,7 @@ describe('test/controllers/user.test.js', function () {
       .set('Cookie', support.normalUserCookie)
       .send(userInfo)
       .expect(200, function (err, res) {
-        res.text.should.containEql('当前密码不正确。');
+        res.text.should.containEql('Current password does not match.');
         done(err);
       });
     });
