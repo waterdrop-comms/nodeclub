@@ -291,7 +291,7 @@ describe('test/controllers/topic.test.js', function () {
       })
       .expect(403)
       .end(function (err, res) {
-        res.text.should.equal('此主题已锁定。');
+        res.text.should.equal('Topic Locked.');
         done(err);
       });
     });

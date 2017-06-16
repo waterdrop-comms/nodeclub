@@ -36,10 +36,10 @@ describe('test/controllers/user.test.js', function () {
         var texts = [
           'Registration Date',
           'I am lazy',
-          '最近创建的话题',
-          '无话题',
-          '最近参与的话题',
-          '无话题'
+          'Latest Topics',
+          'No Topics',
+          'Latest Comments',
+          'No Topics'
         ];
         texts.forEach(function (text) {
           res.text.should.containEql(text);
@@ -193,7 +193,7 @@ describe('test/controllers/user.test.js', function () {
     it('should get /users/top100', function (done) {
       request.get('/users/top100')
       .expect(200, function (err, res) {
-        res.text.should.containEql('Top100 积分榜');
+        res.text.should.containEql('Ladder Top100');
         done(err);
       });
     });

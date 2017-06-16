@@ -39,7 +39,7 @@ exports.index = function (req, res, next) {
   var currentUser = req.session.user;
 
   if (topic_id.length !== 24) {
-    return res.render404('此话题不存在或已被删除。');
+    return res.render404('Topic does not exist or was deleted');
   }
   var events = ['topic', 'other_topics', 'no_reply_topics', 'is_collect'];
   var ep = EventProxy.create(events,
@@ -180,7 +180,7 @@ exports.showEdit = function (req, res, next) {
 
   Topic.getTopicById(topic_id, function (err, topic, tags) {
     if (!topic) {
-      res.render404('此话题不存在或已被删除。');
+      res.render404('Topic does not exist or was deleted');
       return;
     }
 
@@ -207,7 +207,7 @@ exports.update = function (req, res, next) {
 
   Topic.getTopicById(topic_id, function (err, topic, tags) {
     if (!topic) {
-      res.render404('此话题不存在或已被删除。');
+      res.render404('Topic does not exist or was deleted');
       return;
     }
 
@@ -298,7 +298,7 @@ exports.top = function (req, res, next) {
   var referer  = req.get('referer');
 
   if (topic_id.length !== 24) {
-    res.render404('此话题不存在或已被删除。');
+    res.render404('Topic does not exist or was deleted');
     return;
   }
   Topic.getTopic(topic_id, function (err, topic) {
@@ -306,7 +306,7 @@ exports.top = function (req, res, next) {
       return next(err);
     }
     if (!topic) {
-      res.render404('此话题不存在或已被删除。');
+      res.render404('Topic does not exist or was deleted');
       return;
     }
     topic.top = !topic.top;
@@ -330,7 +330,7 @@ exports.good = function (req, res, next) {
       return next(err);
     }
     if (!topic) {
-      res.render404('此话题不存在或已被删除。');
+      res.render404('Topic does not exist or was deleted');
       return;
     }
     topic.good = !topic.good;
@@ -353,7 +353,7 @@ exports.lock = function (req, res, next) {
       return next(err);
     }
     if (!topic) {
-      res.render404('此话题不存在或已被删除。');
+      res.render404('Topic does not exist or was deleted');
       return;
     }
     topic.lock = !topic.lock;

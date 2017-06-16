@@ -18,7 +18,7 @@ exports.add = function (req, res, next) {
 
   var str = validator.trim(String(content));
   if (str === '') {
-    return res.renderError('回复内容不能为空!', 422);
+    return res.renderError('Please type in', 422);
   }
 
   var ep = EventProxy.create();
@@ -32,7 +32,7 @@ exports.add = function (req, res, next) {
     }
 
     if (topic.lock) {
-      return res.status(403).send('此主题已锁定。');
+      return res.status(403).send('Topic Locked.');
     }
     ep.emit('topic', topic);
   }));
@@ -111,7 +111,7 @@ exports.showEdit = function (req, res, next) {
 
   Reply.getReplyById(reply_id, function (err, reply) {
     if (!reply) {
-      return res.render404('此回复不存在或已被删除。');
+      return res.render404('Topic does not exist or was deleted');
     }
     if (req.session.user._id.equals(reply.author_id) || req.session.user.is_admin) {
       res.render('reply/edit', {
@@ -119,7 +119,7 @@ exports.showEdit = function (req, res, next) {
         content: reply.content
       });
     } else {
-      return res.renderError('对不起，你不能编辑此回复。', 403);
+      return res.renderError('Sorry, you cannot do that.', 403);
     }
   });
 };
@@ -132,7 +132,7 @@ exports.update = function (req, res, next) {
 
   Reply.getReplyById(reply_id, function (err, reply) {
     if (!reply) {
-      return res.render404('此回复不存在或已被删除。');
+      return res.render404('Topic does not exist or was deleted');
     }
 
     if (String(reply.author_id) === req.session.user._id.toString() || req.session.user.is_admin) {
@@ -147,10 +147,10 @@ exports.update = function (req, res, next) {
           res.redirect('/topic/' + reply.topic_id + '#' + reply._id);
         });
       } else {
-        return res.renderError('回复的字数太少。', 400);
+        return res.renderError('Please type in more.', 400);
       }
     } else {
-      return res.renderError('对不起，你不能编辑此回复。', 403);
+      return res.renderError('Sorry, you cannot edit that.', 403);
     }
   });
 };
@@ -166,7 +166,7 @@ exports.up = function (req, res, next) {
       // 不能帮自己点赞
       res.send({
         success: false,
-        message: '呵呵，不能帮自己点赞。',
+        message: 'Cannot do that for yourself.',
       });
     } else {
       var action;

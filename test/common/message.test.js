@@ -46,7 +46,7 @@ describe('test/common/message.test.js', function () {
           .expect(200, function (err, res) {
             var texts = [
               author.loginname,
-              '回复了你的话题',
+              'replied to your topic',
               topic.title,
             ];
             texts.forEach(function (text) {
@@ -70,9 +70,9 @@ describe('test/common/message.test.js', function () {
           .expect(200, function (err, res) {
             var texts = [
               author.loginname,
-              '在话题',
+              'on topic',
               topic.title,
-              '中@了你',
+              'mentioned you',
             ];
             texts.forEach(function (text) {
               res.text.should.containEql(text)

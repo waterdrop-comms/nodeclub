@@ -136,7 +136,7 @@ exports.getFullTopic = function (id, callback) {
   Topic.findOne({_id: id, deleted: false}, proxy.done(function (topic) {
     if (!topic) {
       proxy.unbind();
-      return callback(null, '此话题不存在或已被删除。');
+      return callback(null, 'Topic does not exist or was deleted.');
     }
     at.linkUsers(topic.content, proxy.done('topic', function (str) {
       topic.linkedContent = str;
