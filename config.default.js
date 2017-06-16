@@ -13,6 +13,7 @@ var config = {
   name: 'Nodeclub', // 社区名字
   description: 'CNode：Node.js专业中文社区', // 社区的描述
   keywords: 'nodejs, node, express, connect, socket.io',
+  domainname: 'nodejs.org', //update it to yours
 
   // 添加到 html head 中的信息
   site_headers: [
