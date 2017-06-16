@@ -5,7 +5,7 @@ describe('test/controllers/static.test.js', function () {
   it('should get /about', function (done) {
     request.get('/about').expect(200)
       .end(function (err, res) {
-        res.text.should.containEql('CNode 社区由一批热爱 Node.js 技术的工程师发起');
+        res.text.should.containEql('Disclaimer');
         done(err);
       });
   });

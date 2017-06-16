@@ -50,7 +50,8 @@ exports.sendActiveMail = function (who, token, name) {
     '<a href  = "' + SITE_ROOT_URL + '/active_account?key=' + token + '&name=' + name + '">Activate</a>' +
     '<p>If you did not register on ' + config.name + ', please disregard this message.</p>' +
     '<p>' + config.name + '</p>';
-
+  
+  
   exports.sendMail({
     from: from,
     to: to,

@@ -50,12 +50,12 @@ var a = 1;
     it('should escape content', function () {
       var signature = multiline(function () {;
 /*
-我爱北京天安门<script>alert(1)
+I Love You<script>alert(1)
 </script>
 */
       });
       var escaped = renderHelper.escapeSignature(signature);
-      escaped.should.equal('我爱北京天安门&lt;script&gt;alert(1)<br>&lt;/script&gt;');
+      escaped.should.equal('I Love You&lt;script&gt;alert(1)<br>&lt;/script&gt;');
     })
   })
 

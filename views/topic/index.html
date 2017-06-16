@@ -14,7 +14,7 @@
 
   <div class='panel'>
     <div class='header'>
-      <span class='col_fade'>作者其它话题</span>
+      <span class='col_fade'>Topics from Author</span>
     </div>
     <div class='inner'>
       <% if (typeof(author_other_topics) === 'undefined' || author_other_topics.length > 0) { %>
@@ -29,7 +29,7 @@
 
   <div class='panel'>
     <div class='header'>
-      <span class='col_fade'>无人回复的话题</span>
+      <span class='col_fade'>Latest Topics</span>
     </div>
     <div class='inner'>
       <% if (typeof(no_reply_topics) !== 'undefined' && no_reply_topics.length > 0) { %>
@@ -90,35 +90,35 @@
 
           <a href='/topic/<%= topic._id %>/good' data-method="post">
             <% if (topic.good) { %>
-              <i class="fa fa-lg fa-heart-o" title="取消精华"></i>
+              <i class="fa fa-lg fa-heart-o" title="Cancel Like"></i>
             <% } else { %>
-              <i class="fa fa-lg fa-heart" title="加精华"></i>
+              <i class="fa fa-lg fa-heart" title="Like"></i>
             <% } %>
           </a>
 
           <a href='/topic/<%= topic._id %>/lock' data-method="post">
             <% if (topic.lock) { %>
-              <i class="fa fa-lg fa-unlock" title='取消锁定'></i>
+              <i class="fa fa-lg fa-unlock" title='Cancel Lock'></i>
             <% } else { %>
-              <i class="fa fa-lg fa-lock" title='锁定（不可再回复）'/></i>
+              <i class="fa fa-lg fa-lock" title='Lock'/></i>
             <% } %>
           </a>
 
 
           <a href='/topic/<%= topic._id %>/edit'>
-            <i class="fa fa-lg fa-pencil-square-o" title='编辑'></i></a>
+            <i class="fa fa-lg fa-pencil-square-o" title='Edit'></i></a>
           <a href='javascript:;'
              data-id="<%= topic._id %>"
              class='delete_topic_btn'>
-             <i class="fa fa-lg fa-trash" title='删除'></i></a>
+             <i class="fa fa-lg fa-trash" title='Delete'></i></a>
           <% } else { %>
           <% if (current_user._id.equals(topic.author_id)) { %>
           <a href='/topic/<%= topic._id %>/edit'>
-            <i class="fa fa-lg fa-pencil-square-o" title='编辑'></i></a>
+            <i class="fa fa-lg fa-pencil-square-o" title='Edit'></i></a>
           <a href='javascript:;'
              data-id="<%= topic._id %>"
              class='delete_topic_btn'>
-             <i class="fa fa-lg fa-trash" title='删除'></i></a>
+             <i class="fa fa-lg fa-trash" title='Delete'></i></a>
           <% } %>
         <% } %>
 

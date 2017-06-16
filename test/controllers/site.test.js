@@ -20,7 +20,7 @@ describe('test/controllers/site.test.js', function () {
     request.get('/').end(function (err, res) {
       res.status.should.equal(200);
       res.text.should.containEql('Ladder');
-      res.text.should.containEql('Links');
+      res.text.should.containEql('Sponsors');
       done(err);
     });
   });
@@ -29,7 +29,7 @@ describe('test/controllers/site.test.js', function () {
     request.get('/?page=-1').end(function (err, res) {
       res.status.should.equal(200);
       res.text.should.containEql('Ladder');
-      res.text.should.containEql('Links');
+      res.text.should.containEql('Sponsors');
       done(err);
     });
   });
